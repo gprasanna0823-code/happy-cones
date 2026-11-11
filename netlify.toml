@@ -1,0 +1,29 @@
+"$schema" = "https://open-api.netlify.com/netlify.schema.json"
+
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["data/payment-qr.jpg", "data/products.json", "data/settings.json"]
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+
+[[redirects]]
+  from = "/standee"
+  to = "/standee.html"
+  status = 200
+
+[[redirects]]
+  from = "/table-qr"
+  to = "/standee.html"
+  status = 200
+

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAPPY CONES 🍦 - Shop QR Code &amp; Payment Standee</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#FFF5F7',
+              100: '#FFE4E9',
+              500: '#F43F5E',
+              600: '#E11D48',
+              700: '#BE123C',
+            },
+            choco: {
+              800: '#422419',
+              900: '#2C1810',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- QR Generator -->
+  <script src="/js/qr-generator.js"></script>
+
+  <style>
+    @media print {
+      body {
+        background: white !important;
+        padding: 0 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .standee-card {
+        page-break-after: always;
+        break-inside: avoid;
+        box-shadow: none !important;
+        border: 2px dashed #cbd5e1 !important;
+        margin: 20px auto !important;
+        width: 380px !important;
+        height: 560px !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-stone-100 min-h-screen text-stone-800 p-4 md:p-8">
+
+  <!-- ======================================================== -->
+  <!-- CONTROL BAR (NO-PRINT) -->
+  <!-- ======================================================== -->
+  <div class="max-w-4xl mx-auto mb-8 bg-white p-6 rounded-3xl border border-stone-200 shadow-sm no-print space-y-4">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">🍦</span>
+          <h1 class="text-2xl font-black text-choco-900 font-heading">HAPPY CONES Official QR Code Standee</h1>
+        </div>
+        <p class="text-xs text-stone-500 mt-1">Print acrylic tent standees for your counter. Customers scan to order and pay via Google Pay / UPI.</p>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a href="/" class="px-4 py-2.5 rounded-xl border border-stone-200 hover:bg-stone-50 text-xs font-bold text-stone-700 transition-colors">
+          View Ordering Website
+        </a>
+        <a href="/admin" class="px-4 py-2.5 rounded-xl border border-stone-200 hover:bg-stone-50 text-xs font-bold text-stone-700 transition-colors">
+          Admin Portal
+        </a>
+        <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-rose-600 hover:from-brand-600 hover:to-rose-700 text-white text-xs font-extrabold shadow-md flex items-center gap-2 transition-all">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>Print Standee</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- URL Configurator -->
+    <div class="pt-4 border-t border-stone-100 space-y-1">
+      <label class="block text-xs font-bold text-stone-700">Ordering Website URL (Encoded into QR)</label>
+      <div class="flex items-center gap-2">
+        <input type="text" id="targetBaseUrl" class="flex-1 px-3.5 py-2 rounded-xl border border-stone-200 text-xs font-mono font-bold focus:ring-2 focus:ring-brand-500 focus:outline-none bg-stone-50" placeholder="http://192.168.1.X:3000">
+        <button onclick="updateAllQRs()" class="px-4 py-2 bg-choco-900 hover:bg-black text-white text-xs font-bold rounded-xl transition-colors">
+          Regenerate QR
+        </button>
+      </div>
+      <p class="text-[11px] text-stone-500">
+        <span id="hintNetworkLabel">Local Wi-Fi IP for phone camera scanning:</span> <span id="hintNetworkIp" class="font-mono text-brand-600 font-bold">http://10.27.17.172:3000</span>
+        <span id="hintNetworkSub" class="block text-[10px] text-stone-400 mt-0.5">Phone must be on the same Wi-Fi / Hotspot as this PC (or deploy to Netlify for public access from anywhere).</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- PRINTABLE STANDEE CARDS CONTAINER -->
+  <!-- ======================================================== -->
+  <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-start justify-center">
+
+    <!-- Standee 1: Premium Acrylic Counter Standee (5x7 / A4) -->
+    <div class="standee-card bg-white rounded-3xl p-6 border-2 border-pink-200 shadow-xl overflow-hidden relative flex flex-col justify-between text-center mx-auto w-full max-w-sm">
+      
+      <!-- Top Brand Header -->
+      <div class="space-y-1.5">
+        <div class="w-16 h-16 rounded-3xl bg-gradient-to-tr from-brand-500 to-amber-500 text-white mx-auto flex items-center justify-center text-3xl shadow-lg shadow-brand-500/25">
+          🍦
+        </div>
+        <div>
+          <h2 class="text-3xl font-black text-choco-900 font-heading tracking-tight leading-none mt-1">HAPPY CONES</h2>
+          <span class="text-[11px] font-extrabold text-brand-600 uppercase tracking-widest block mt-0.5">Online Ice Cream Ordering</span>
+        </div>
+      </div>
+
+      <!-- Banner -->
+      <div class="my-2">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-choco-900 to-choco-800 text-amber-300 font-black text-xs uppercase tracking-wider shadow-md">
+          Scan to Order &amp; Pay Online
+        </span>
+      </div>
+
+      <!-- Main QR Code Box -->
+      <div class="p-4 bg-gradient-to-b from-pink-50 to-cream-50 rounded-3xl border-2 border-dashed border-pink-300 inline-block mx-auto shadow-inner relative">
+        <div id="mainQrContainer" class="flex items-center justify-center p-2 bg-white rounded-2xl shadow-sm"></div>
+        <div class="mt-2 text-[10px] font-bold text-stone-600 flex items-center justify-center gap-1">
+          <span>Scan with Camera / Google Lens / Any UPI App</span>
+        </div>
+      </div>
+
+      <!-- Instructions & Features -->
+      <div class="mt-2 space-y-2.5">
+        <p class="text-xs font-black text-choco-900">
+          No App Needed • All Ice Creams Under ₹150!
+        </p>
+
+        <div class="grid grid-cols-3 gap-1 text-[10px] font-bold text-stone-600 pt-1 border-t border-pink-100">
+          <div class="flex flex-col items-center">
+            <span class="text-base mb-0.5">📸</span>
+            <span>1. Scan QR</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-base mb-0.5">🍨</span>
+            <span>2. Choose Ice Cream</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <span class="text-base mb-0.5">💳</span>
+            <span>3. Pay Google Pay / UPI</span>
+          </div>
+        </div>
+
+        <div class="p-2 rounded-xl bg-pink-50 text-[10px] font-bold text-stone-600 flex items-center justify-center gap-2">
+          <span>Owner WhatsApp:</span>
+          <span class="font-mono text-brand-600 text-xs font-extrabold">9344232175</span>
+        </div>
+      </div>
+
+      <!-- No-print download buttons -->
+      <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between no-print text-xs">
+        <button onclick="downloadMainQR()" class="px-4 py-2 rounded-xl border border-stone-200 hover:bg-stone-50 font-bold text-stone-700 flex items-center gap-1 transition-colors">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>Download PNG</span>
+        </button>
+        <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-brand-500 text-white font-bold flex items-center gap-1 shadow-sm transition-colors">
+          <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+          <span>Print Standee</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Standee 2: Luxury Gelato Dark Edition (4x6 Tent Card) -->
+    <div class="standee-card bg-choco-900 text-white rounded-3xl p-6 border-2 border-amber-400/40 shadow-xl overflow-hidden relative flex flex-col justify-between text-center mx-auto w-full max-w-sm">
+      
+      <!-- Top Brand Header -->
+      <div class="space-y-1.5">
+        <div class="w-16 h-16 rounded-3xl bg-amber-400 text-choco-900 mx-auto flex items-center justify-center text-3xl shadow-lg">
+          🍦
+        </div>
+        <div>
+          <h2 class="text-3xl font-black text-amber-300 font-heading tracking-tight leading-none mt-1">HAPPY CONES</h2>
+          <span class="text-[11px] font-extrabold text-pink-300 uppercase tracking-widest block mt-0.5">Artisanal Gelato &amp; Ice Cream</span>
+        </div>
+      </div>
+
+      <!-- Banner -->
+      <div class="my-2">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-amber-400 text-choco-900 font-black text-xs uppercase tracking-wider shadow-md">
+          Direct Mobile Ordering &amp; UPI
+        </span>
+      </div>
+
+      <!-- Main QR Code Box -->
+      <div class="p-4 bg-white/10 rounded-3xl border border-white/20 inline-block mx-auto shadow-inner relative">
+        <div id="darkQrContainer" class="flex items-center justify-center p-2 bg-white rounded-2xl shadow-sm"></div>
+        <div class="mt-2 text-[10px] font-bold text-pink-200 flex items-center justify-center gap-1">
+          <span>Scan to Browse Menu &amp; Pay</span>
+        </div>
+      </div>
+
+      <!-- Instructions & Features -->
+      <div class="mt-2 space-y-2.5">
+        <p class="text-xs font-black text-amber-200">
+          Google Pay • PhonePe • Paytm • Any UPI App
+        </p>
+
+        <div class="p-2 rounded-xl bg-white/10 text-[10px] font-bold text-pink-100 flex items-center justify-center gap-2">
+          <span>Automatic WhatsApp Order Alert:</span>
+          <span class="font-mono text-amber-300 text-xs font-extrabold">9344232175</span>
+        </div>
+      </div>
+
+      <!-- No-print actions -->
+      <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between no-print text-xs">
+        <button onclick="downloadDarkQR()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 font-bold text-white flex items-center gap-1 transition-colors">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>Download PNG</span>
+        </button>
+        <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-amber-400 text-choco-900 font-black flex items-center gap-1 shadow-sm transition-colors">
+          <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+          <span>Print Card</span>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let serverBaseUrl = window.location.origin;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const hintLabel = document.getElementById('hintNetworkLabel');
+      const hintIp = document.getElementById('hintNetworkIp');
+      const hintSub = document.getElementById('hintNetworkSub');
+
+      if (window.location.protocol === 'https:') {
+        serverBaseUrl = window.location.origin;
+        if (hintLabel) hintLabel.textContent = 'Public Cloud Website URL (works from anywhere):';
+        if (hintIp) hintIp.textContent = serverBaseUrl;
+        if (hintSub) hintSub.textContent = 'Customers can scan on any mobile data or Wi-Fi network 24/7.';
+      }
+
+      try {
+        const res = await fetch('/api/server-info');
+        if (res.ok) {
+          const info = await res.json();
+          if (info.isCloud) {
+            serverBaseUrl = window.location.origin || info.networkUrl;
+            if (hintLabel) hintLabel.textContent = 'Public Cloud Website URL (works from anywhere):';
+            if (hintIp) hintIp.textContent = serverBaseUrl;
+            if (hintSub) hintSub.textContent = 'Customers can scan on any mobile data or Wi-Fi network 24/7.';
+          } else if (info.networkUrl && window.location.protocol !== 'https:') {
+            serverBaseUrl = info.networkUrl;
+            if (hintIp) hintIp.textContent = info.networkUrl;
+          }
+        }
+      } catch (e) {}
+
+      document.getElementById('targetBaseUrl').value = serverBaseUrl;
+      renderAllQRs();
+
+      if (window.lucide) lucide.createIcons();
+    });
+
+    function updateAllQRs() {
+      const input = document.getElementById('targetBaseUrl').value.trim();
+      if (input) {
+        serverBaseUrl = input.replace(/\/+$/, '');
+        renderAllQRs();
+      }
+    }
+
+    function renderAllQRs() {
+      const mainContainer = document.getElementById('mainQrContainer');
+      const darkContainer = document.getElementById('darkQrContainer');
+
+      if (mainContainer && window.generateQRCodeCanvas) {
+        mainContainer.innerHTML = '';
+        window.generateQRCodeCanvas(mainContainer, serverBaseUrl, { size: 240 });
+      }
+
+      if (darkContainer && window.generateQRCodeCanvas) {
+        darkContainer.innerHTML = '';
+        window.generateQRCodeCanvas(darkContainer, serverBaseUrl, { size: 240 });
+      }
+    }
+
+    function downloadMainQR() {
+      const canvas = document.querySelector('#mainQrContainer canvas');
+      if (!canvas) return;
+      const link = document.createElement('a');
+      link.download = 'HAPPY-CONES-SHOP-ORDER-QR.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function downloadDarkQR() {
+      const canvas = document.querySelector('#darkQrContainer canvas');
+      if (!canvas) return;
+      const link = document.createElement('a');
+      link.download = 'HAPPY-CONES-LUXE-QR.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  </script>
+</body>
+</html>

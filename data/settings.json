@@ -1,0 +1,14 @@
+{
+  "shopName": "HAPPY CONES",
+  "shopTagline": "Choose Your Favourite Ice Cream & Enjoy Every Bite!",
+  "welcomeMessage": "Welcome to Our Ice Cream Paradise!",
+  "upiId": "9344232175@ptyes",
+  "payeeName": "HAPPY CONES (Prasanna G)",
+  "ownerWhatsApp": "919344232175",
+  "adminPin": "1234",
+  "paymentQrImage": "/api/payment-qr",
+  "currencySymbol": "₹",
+  "serviceTaxPercent": 0,
+  "discountPromoCode": "HAPPY10",
+  "discountPercent": 10
+}

@@ -1,0 +1,13 @@
+{
+  "name": "happy-cones-ice-cream",
+  "version": "1.0.0",
+  "description": "Happy Cones Ice Cream Shop Online Ordering System with QR Code",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node -e \"console.log('Happy Cones static assets and Netlify Functions ready')\""
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.5"
+  }
+}

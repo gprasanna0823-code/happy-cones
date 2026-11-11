@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>HAPPY CONES 🍦 - Online Ice Cream Paradise</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#FFF5F7',
+              100: '#FFE4E9',
+              200: '#FCCDD7',
+              500: '#F43F5E',
+              600: '#E11D48',
+              700: '#BE123C',
+            },
+            choco: {
+              700: '#5C3224',
+              800: '#422419',
+              900: '#2C1810',
+            },
+            cream: {
+              50: '#FFFCF7',
+              100: '#FEF7EA',
+              200: '#FDF0D5',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+  <!-- Offline QR Generator -->
+  <script src="/js/qr-generator.js"></script>
+</head>
+<body class="bg-icecream-pattern min-h-screen text-stone-800 pb-24 md:pb-12">
+
+  <!-- ======================================================== -->
+  <!-- TOP NAVIGATION HEADER -->
+  <!-- ======================================================== -->
+  <header class="sticky top-0 z-30 glass-header border-b border-pink-100 shadow-sm transition-all duration-200">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      
+      <!-- Brand Logo & Shop Name -->
+      <a href="/" class="flex items-center gap-2.5 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-amber-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+          <span class="text-2xl">🍦</span>
+        </div>
+        <div>
+          <span class="text-xl font-extrabold tracking-tight text-choco-900 font-heading block leading-none">HAPPY CONES</span>
+          <span class="text-[10px] font-semibold text-brand-600 uppercase tracking-widest">Ice Cream Paradise</span>
+        </div>
+      </a>
+
+      <!-- Shop Badge & Quick Actions -->
+      <div class="flex items-center gap-2">
+        <div class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-pink-100/80 text-brand-700 text-xs font-bold border border-pink-200">
+          <span>✨ 100% Real Dairy</span>
+        </div>
+
+        <!-- View Kitchen / Track Order Button (if active order exists) -->
+        <button onclick="checkActiveOrderStatus()" id="headerTrackBtn" class="hidden sm:flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold border border-emerald-200 transition-colors">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+          <span>Track Order</span>
+        </button>
+
+        <!-- Shop QR Standee Link (For Shop Staff/Owner) -->
+        <a href="/standee" target="_blank" title="Print Shop QR Code" class="p-2 rounded-full hover:bg-pink-100 text-stone-600 hover:text-brand-600 transition-colors hidden md:flex items-center gap-1 text-xs font-semibold">
+          <i data-lucide="qr-code" class="w-4 h-4"></i>
+          <span>Shop QR</span>
+        </a>
+
+        <!-- Admin Portal Shortcut -->
+        <a href="/admin" target="_blank" title="Kitchen & Admin Portal" class="p-2 rounded-full hover:bg-pink-100 text-stone-600 hover:text-brand-600 transition-colors flex items-center gap-1 text-xs font-semibold">
+          <i data-lucide="shield-check" class="w-4 h-4"></i>
+          <span class="hidden sm:inline">Admin</span>
+        </a>
+
+        <!-- Floating Cart Button (Header desktop) -->
+        <button onclick="openCartModal()" class="relative p-2.5 rounded-2xl bg-brand-500 hover:bg-brand-600 text-white shadow-md shadow-brand-500/25 transition-all btn-bounce flex items-center gap-2">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span id="headerCartCount" class="bg-white text-brand-600 font-extrabold text-xs w-5 h-5 rounded-full flex items-center justify-center">0</span>
+          <span id="headerCartTotal" class="text-xs font-bold hidden md:inline">₹0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- MAIN APP CONTAINER -->
+  <!-- ======================================================== -->
+  <main class="max-w-6xl mx-auto px-4 py-4 md:py-6">
+
+    <!-- HERO WELCOME BANNER (PAGE 1) -->
+    <section class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white shadow-xl shadow-pink-500/15 mb-6 md:mb-8 p-6 md:p-10">
+      <!-- Decorative background blur circles -->
+      <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-yellow-300/30 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="absolute -left-10 -top-10 w-60 h-60 bg-pink-300/30 rounded-full blur-2xl pointer-events-none"></div>
+      
+      <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <div class="md:col-span-8 space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold uppercase tracking-wider text-white border border-white/20">
+            <span>✨ Pure Artisanal Ice Creams</span>
+            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+            <span>QR Ordering</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-black font-heading tracking-tight leading-tight">
+            Welcome to Our <br class="hidden sm:inline">Ice Cream Paradise! 🍦
+          </h1>
+
+          <p class="text-pink-100 text-sm sm:text-base font-medium max-w-xl">
+            Choose Your Favourite Ice Cream &amp; Enjoy Every Bite! Handcrafted with rich dairy cream, Belgian chocolates, and fresh farm fruits.
+          </p>
+
+          <!-- Direct Order Notice -->
+          <div class="flex flex-wrap items-center gap-3 pt-2 text-xs font-bold text-white/95">
+            <div class="flex items-center gap-1.5 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-xl border border-white/10">
+              <i data-lucide="qr-code" class="w-4 h-4 text-amber-300"></i>
+              <span>Scanned from Shop QR</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-xl border border-white/10">
+              <i data-lucide="zap" class="w-4 h-4 text-emerald-300"></i>
+              <span>Instant Kitchen Order</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-xl border border-white/10">
+              <i data-lucide="credit-card" class="w-4 h-4 text-sky-300"></i>
+              <span>Google Pay / UPI</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero visual illustration -->
+        <div class="md:col-span-4 flex justify-center relative">
+          <div class="w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 relative animate-float">
+            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=400&q=80" alt="Delicious Sundae" class="w-full h-full object-cover rounded-3xl shadow-2xl border-4 border-white/40 ring-4 ring-pink-300/30">
+            <div class="absolute -bottom-3 -right-3 bg-white text-choco-900 font-extrabold text-xs px-3 py-1.5 rounded-2xl shadow-lg border border-pink-100 flex items-center gap-1">
+              <span>⭐ 4.9 Rating</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEARCH & CATEGORY FILTER TABS -->
+    <div class="sticky top-16 z-20 py-2 bg-icecream-pattern/95 backdrop-blur-md space-y-3 mb-6">
+      
+      <!-- Search Input -->
+      <div class="relative max-w-md mx-auto">
+        <i data-lucide="search" class="w-4 h-4 text-stone-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+        <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search ice cream, cones, sundae, kulfi..." class="w-full pl-11 pr-10 py-3 rounded-2xl bg-white border border-pink-200/80 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-sm font-medium transition-all">
+        <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Categories Pills (All 8 Categories) -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar px-1" id="categoryTabsContainer">
+        <!-- Will be rendered dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- PRODUCTS GRID (PAGE 1) -->
+    <section>
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 id="activeCategoryHeading" class="text-xl sm:text-2xl font-black text-choco-900 font-heading">All Ice Creams</h2>
+          <p id="productsCountText" class="text-xs text-stone-500 font-medium">Showing delicious flavours</p>
+        </div>
+
+        <!-- Quick filter for Veg / In-Stock -->
+        <div class="flex items-center gap-2 text-xs">
+          <button onclick="toggleVegOnly()" id="vegFilterBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-stone-200 bg-white hover:border-emerald-500 text-stone-700 font-semibold transition-all">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <span>Veg Only</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="noProductsFound" class="hidden text-center py-16 px-4">
+        <div class="text-6xl mb-3">🍧</div>
+        <h3 class="text-lg font-bold text-choco-900">No ice creams found</h3>
+        <p class="text-xs text-stone-500 mt-1">Try searching for a different flavour or select another category</p>
+        <button onclick="resetCategoryFilter()" class="mt-4 px-4 py-2 bg-brand-500 text-white rounded-xl text-xs font-bold">View All Items</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- FLOATING BOTTOM ORDER BAR (MOBILE & DESKTOP) -->
+  <!-- ======================================================== -->
+  <div id="floatingBottomBar" class="fixed bottom-3 left-4 right-4 max-w-xl mx-auto z-30 transition-all duration-300 transform translate-y-24 opacity-0 pointer-events-none">
+    <div class="bg-gradient-to-r from-choco-900 via-choco-800 to-choco-900 text-white rounded-3xl p-3.5 shadow-2xl flex items-center justify-between border border-choco-700/50 backdrop-blur-lg">
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-2xl bg-brand-500 flex items-center justify-center text-white font-extrabold text-sm shadow-md">
+          <span id="floatingCartCount">0</span>
+        </div>
+        <div>
+          <div class="text-xs text-pink-200 font-semibold">Your Happy Tray</div>
+          <div class="text-base font-extrabold text-white flex items-center gap-1">
+            <span id="floatingCartTotal">₹0</span>
+            <span class="text-[10px] text-pink-300 font-normal">(incl. taxes)</span>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="openCartModal()" class="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-brand-500 to-rose-500 hover:from-brand-600 hover:to-rose-600 text-white font-bold text-sm shadow-lg shadow-brand-500/30 btn-bounce transition-all">
+        <span>View Order</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- PAGE 2: PRODUCT CUSTOMIZATION & ORDERING MODAL -->
+  <!-- ======================================================== -->
+  <div id="productModal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 p-0 sm:p-4">
+    <div id="productModalCard" class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[90vh] overflow-y-auto transform translate-y-full sm:translate-y-8 transition-transform duration-300 shadow-2xl flex flex-col">
+      
+      <!-- Modal Header Image & Close Button -->
+      <div class="relative h-60 sm:h-72 w-full bg-pink-100 flex-shrink-0">
+        <img id="modalProductImage" src="" alt="" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20"></div>
+        
+        <!-- Close Button -->
+        <button onclick="closeProductModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-md transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+        <!-- Category & Rating Badges -->
+        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
+          <div>
+            <span id="modalProductBadge" class="px-2.5 py-0.5 rounded-full bg-brand-500 text-[10px] font-extrabold uppercase tracking-wider">Bestseller</span>
+            <h3 id="modalProductName" class="text-xl sm:text-2xl font-black font-heading mt-1 leading-tight text-white drop-shadow">Belgian Chocolate Cone</h3>
+          </div>
+          <div class="bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-xl text-xs font-bold flex items-center gap-1 border border-white/20">
+            <span>⭐</span>
+            <span id="modalProductRating">4.9</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Body Form -->
+      <div class="p-5 sm:p-6 space-y-5 flex-1 overflow-y-auto">
+        
+        <!-- Description -->
+        <p id="modalProductDesc" class="text-xs sm:text-sm text-stone-600 leading-relaxed font-medium">
+          Rich dark chocolate scoop nestled in a freshly baked crispy waffle cone.
+        </p>
+
+        <!-- Base Price Display -->
+        <div class="flex items-center justify-between p-3 rounded-2xl bg-pink-50/70 border border-pink-100">
+          <span class="text-xs font-bold text-stone-600">Base Price</span>
+          <span id="modalBasePrice" class="text-lg font-black text-brand-600">₹120</span>
+        </div>
+
+        <!-- 1. Flavour Selection -->
+        <div id="modalFlavoursSection">
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-xs font-extrabold uppercase tracking-wider text-choco-900 flex items-center gap-1">
+              <span>Choose Flavour</span>
+              <span class="text-brand-500">*</span>
+            </label>
+            <span class="text-[10px] text-stone-400 font-semibold">Select 1</span>
+          </div>
+          <div id="modalFlavoursList" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- 2. Size / Portion Selection -->
+        <div id="modalSizesSection">
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-xs font-extrabold uppercase tracking-wider text-choco-900 flex items-center gap-1">
+              <span>Select Size / Scoop</span>
+              <span class="text-brand-500">*</span>
+            </label>
+            <span class="text-[10px] text-stone-400 font-semibold">Choose size</span>
+          </div>
+          <div id="modalSizesList" class="space-y-2">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- 3. Add-ons & Toppings Selection -->
+        <div id="modalToppingsSection">
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-xs font-extrabold uppercase tracking-wider text-choco-900">
+              Extra Toppings &amp; Drizzles
+            </label>
+            <span class="text-[10px] text-stone-400 font-semibold">Optional</span>
+          </div>
+          <div id="modalToppingsList" class="space-y-2">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Special Request Note -->
+        <div>
+          <label class="block text-xs font-extrabold uppercase tracking-wider text-choco-900 mb-1">
+            Special Instructions for Kitchen
+          </label>
+          <input type="text" id="modalInstructions" placeholder="e.g. Less sweet, extra nuts, separate spoons..." class="w-full px-3.5 py-2.5 rounded-xl border border-stone-200 text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none">
+        </div>
+
+        <!-- Quantity Stepper & Add to Cart -->
+        <div class="pt-2 border-t border-stone-100 flex items-center justify-between gap-4">
+          
+          <!-- Stepper -->
+          <div class="flex items-center border border-pink-200 bg-pink-50/50 rounded-2xl p-1">
+            <button onclick="decrementModalQty()" class="w-9 h-9 rounded-xl bg-white hover:bg-pink-100 text-choco-900 font-black flex items-center justify-center transition-colors shadow-sm">
+              <i data-lucide="minus" class="w-4 h-4"></i>
+            </button>
+            <span id="modalQuantity" class="w-10 text-center font-extrabold text-choco-900 text-base">1</span>
+            <button onclick="incrementModalQty()" class="w-9 h-9 rounded-xl bg-white hover:bg-pink-100 text-choco-900 font-black flex items-center justify-center transition-colors shadow-sm">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Add Button with dynamic calculated total -->
+          <button onclick="confirmAddToCart()" class="flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-brand-500 to-rose-600 hover:from-brand-600 hover:to-rose-700 text-white font-extrabold text-sm shadow-xl shadow-brand-500/25 btn-bounce flex items-center justify-between transition-all">
+            <span>Add to Cart</span>
+            <span id="modalFinalPrice">₹120</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- PAGE 3: ORDER SUMMARY / CART MODAL -->
+  <!-- ======================================================== -->
+  <div id="cartModal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 p-0 sm:p-4">
+    <div id="cartModalCard" class="bg-white w-full max-w-xl rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto transform translate-y-full sm:translate-y-8 transition-transform duration-300 shadow-2xl flex flex-col">
+      
+      <!-- Cart Header -->
+      <div class="p-5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-pink-50 to-cream-50 rounded-t-3xl">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-brand-500 text-white flex items-center justify-center shadow-sm">
+            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-black text-choco-900 font-heading">Your Order Summary</h3>
+            <p class="text-xs text-stone-500">Review selected delicious treats</p>
+          </div>
+        </div>
+
+        <button onclick="closeCartModal()" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Cart Content -->
+      <div class="p-5 sm:p-6 space-y-6 flex-1 overflow-y-auto">
+        
+        <!-- Cart Empty State -->
+        <div id="cartEmptyState" class="hidden text-center py-10">
+          <span class="text-6xl">🍨</span>
+          <h4 class="text-base font-bold text-choco-900 mt-2">Your Tray is Empty</h4>
+          <p class="text-xs text-stone-500 mt-1">Pick some fresh artisanal cones to satisfy your sweet tooth!</p>
+          <button onclick="closeCartModal()" class="mt-4 px-5 py-2.5 bg-brand-500 text-white text-xs font-bold rounded-xl shadow-md">Browse Menu</button>
+        </div>
+
+        <!-- Selected Items List -->
+        <div id="cartItemsList" class="space-y-3">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Customer Details Form -->
+        <div id="cartFormSection" class="p-4 rounded-2xl bg-cream-50 border border-cream-200/80 space-y-3">
+          <h4 class="text-xs font-black uppercase tracking-wider text-choco-900 flex items-center gap-1.5">
+            <i data-lucide="user" class="w-3.5 h-3.5 text-brand-600"></i>
+            <span>Customer Details</span>
+          </h4>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-stone-600 mb-1">Your Name *</label>
+              <input type="text" id="customerNameInput" placeholder="e.g. Rahul / Ananya" class="w-full px-3 py-2 rounded-xl border border-stone-200 text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none bg-white font-bold">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-stone-600 mb-1">Mobile Number (WhatsApp) *</label>
+              <input type="tel" id="customerPhoneInput" placeholder="e.g. 9876543210" class="w-full px-3 py-2 rounded-xl border border-stone-200 text-xs focus:ring-2 focus:ring-brand-500 focus:outline-none bg-white font-bold">
+            </div>
+          </div>
+          <p class="text-[10px] text-stone-400 font-medium">Order receipt will be sent directly to shop WhatsApp after payment.</p>
+        </div>
+
+        <!-- Bill Calculation Summary -->
+        <div id="cartBillSection" class="p-4 rounded-2xl bg-white border border-pink-100 shadow-sm space-y-2.5">
+          
+          <!-- Promo Code Input -->
+          <div class="flex items-center gap-2 pb-2 border-b border-stone-100">
+            <input type="text" id="promoCodeInput" placeholder="Enter coupon code (try HAPPY10)" class="flex-1 px-3 py-2 rounded-xl border border-stone-200 text-xs uppercase font-bold focus:ring-2 focus:ring-brand-500 focus:outline-none">
+            <button onclick="applyPromoCode()" class="px-4 py-2 bg-stone-800 hover:bg-stone-900 text-white text-xs font-bold rounded-xl transition-colors">Apply</button>
+          </div>
+          <p id="promoMessage" class="hidden text-[11px] font-bold"></p>
+
+          <div class="flex items-center justify-between text-xs text-stone-600">
+            <span>Item Subtotal</span>
+            <span id="billSubtotal" class="font-bold">₹0</span>
+          </div>
+
+          <div id="billDiscountRow" class="hidden flex items-center justify-between text-xs text-emerald-600 font-bold">
+            <span>Special Discount (HAPPY10)</span>
+            <span id="billDiscount">-₹0</span>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-stone-600">
+            <span>Shop Taxes &amp; GST</span>
+            <span class="font-bold text-stone-400">Included (₹0)</span>
+          </div>
+
+          <div class="pt-2 border-t border-dashed border-stone-200 flex items-center justify-between">
+            <div>
+              <span class="text-sm font-black text-choco-900 block font-heading">Total Amount</span>
+              <span class="text-[10px] text-stone-400 font-medium">Safe &amp; Direct UPI Payment</span>
+            </div>
+            <span id="billGrandTotal" class="text-2xl font-black text-brand-600">₹0</span>
+          </div>
+        </div>
+
+        <!-- Confirm and Proceed to Payment Button -->
+        <div id="cartActionBtnContainer">
+          <button onclick="proceedToPaymentPage()" id="confirmOrderBtn" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-brand-500 via-rose-500 to-amber-500 hover:from-brand-600 hover:to-amber-600 text-white font-extrabold text-base shadow-xl shadow-brand-500/30 btn-bounce flex items-center justify-center gap-2 transition-all">
+            <i data-lucide="lock" class="w-4 h-4"></i>
+            <span>Confirm Order &amp; Proceed to Pay</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- PAGE 4: GOOGLE PAY / UPI PAYMENT PAGE -->
+  <!-- ======================================================== -->
+  <div id="paymentModal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 p-0 sm:p-4">
+    <div id="paymentModalCard" class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto transform translate-y-full sm:translate-y-8 transition-transform duration-300 shadow-2xl flex flex-col">
+      
+      <!-- Payment Header -->
+      <div class="p-5 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-brand-50 to-pink-50 rounded-t-3xl">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center shadow-sm">
+            <i data-lucide="credit-card" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-black text-choco-900 font-heading">Complete Your Payment</h3>
+            <p class="text-xs text-stone-500">Scan QR via Google Pay, PhonePe or Paytm</p>
+          </div>
+        </div>
+
+        <button onclick="closePaymentModal()" class="w-8 h-8 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-600 flex items-center justify-center transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+      <!-- Payment Body -->
+      <div class="p-5 sm:p-6 space-y-5 flex-1 overflow-y-auto text-center">
+        
+        <!-- Order Total Banner -->
+        <div class="p-4 rounded-2xl bg-gradient-to-r from-pink-50 via-rose-50 to-amber-50 border border-pink-200">
+          <div class="text-xs font-bold uppercase tracking-wider text-stone-500">Total Order Amount to Pay</div>
+          <div id="paymentTotalAmount" class="text-4xl sm:text-5xl font-black text-brand-600 font-heading mt-0.5">₹35</div>
+          <div class="text-xs text-stone-500 mt-1 flex items-center justify-center gap-1 font-medium">
+            <span>Order ID:</span>
+            <span id="paymentOrderIdDisplay" class="font-extrabold text-choco-900">#HC-0000</span>
+          </div>
+        </div>
+
+        <!-- DYNAMIC EXACT AMOUNT QR CODE BOX -->
+        <div class="p-4 rounded-3xl bg-white border-2 border-brand-500 shadow-md max-w-xs mx-auto space-y-2">
+          
+          <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-black">
+            <span>⚡ Exact Amount Auto-filled (₹<span id="qrAmountBadge">35</span>)</span>
+          </div>
+
+          <!-- Dynamic QR Canvas Container (includes 4-module white quiet zone) -->
+          <div id="dynamicQrCanvasDiv" class="p-1.5 bg-white rounded-2xl shadow-sm inline-block mx-auto border border-stone-100"></div>
+
+          <p class="text-[11px] font-bold text-stone-600">
+            Scan with <span class="text-brand-600 font-extrabold">FamApp, Google Pay, PhonePe, Paytm</span> or Camera
+          </p>
+          <span class="text-[10px] text-emerald-600 font-bold block">No need to type amount — automatically set! ✅</span>
+
+          <!-- Toggle to view shop QR if desired -->
+          <div class="pt-2 border-t border-stone-100">
+            <button onclick="toggleShopQrModal()" class="text-[11px] font-bold text-stone-400 hover:text-stone-700 underline">
+              View Shop Original Paytm QR
+            </button>
+          </div>
+        </div>
+
+        <!-- MOBILE 1-TAP UPI APP PAYMENT (FamApp, GPay, PhonePe, Paytm, Cred) -->
+        <div class="space-y-2 text-left">
+          <label class="block text-xs font-black uppercase tracking-wider text-choco-900 text-center">
+            Tap to Pay Directly with UPI App (Pre-filled):
+          </label>
+
+          <!-- Quick Apps Grid -->
+          <div class="grid grid-cols-2 gap-2">
+            <!-- FamApp -->
+            <button onclick="launchUPI('famapp')" class="p-3 rounded-2xl bg-amber-400 hover:bg-amber-500 text-stone-900 font-black text-xs shadow-sm flex items-center justify-center gap-2 transition-all btn-bounce border border-amber-300">
+              <span class="text-base">⚡</span>
+              <span>FamApp (FamPay)</span>
+            </button>
+
+            <!-- Google Pay -->
+            <button onclick="launchUPI('gpay')" class="p-3 rounded-2xl bg-white hover:bg-stone-50 text-stone-800 font-black text-xs shadow-sm flex items-center justify-center gap-2 transition-all btn-bounce border border-stone-200">
+              <span class="text-base">🔵</span>
+              <span>Google Pay</span>
+            </button>
+
+            <!-- PhonePe -->
+            <button onclick="launchUPI('phonepe')" class="p-3 rounded-2xl bg-purple-700 hover:bg-purple-800 text-white font-black text-xs shadow-sm flex items-center justify-center gap-2 transition-all btn-bounce">
+              <span class="text-base">🟣</span>
+              <span>PhonePe</span>
+            </button>
+
+            <!-- Paytm -->
+            <button onclick="launchUPI('paytm')" class="p-3 rounded-2xl bg-sky-500 hover:bg-sky-600 text-white font-black text-xs shadow-sm flex items-center justify-center gap-2 transition-all btn-bounce">
+              <span class="text-base">🔷</span>
+              <span>Paytm UPI</span>
+            </button>
+          </div>
+
+          <!-- Any UPI App Universal Link -->
+          <button onclick="launchUPI('generic')" class="w-full py-3 rounded-2xl bg-stone-900 hover:bg-black text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-2 transition-all btn-bounce">
+            <i data-lucide="smartphone" class="w-4 h-4 text-emerald-400"></i>
+            <span>Pay with Any Other UPI App (Cred / BHIM)</span>
+          </button>
+        </div>
+
+        <!-- Shop UPI ID with 1-Click Copy -->
+        <div class="flex items-center justify-center gap-2 p-2.5 rounded-xl bg-stone-50 border border-stone-200 max-w-sm mx-auto">
+          <span class="text-xs text-stone-500">UPI ID:</span>
+          <span id="shopUpiIdDisplay" class="text-xs font-mono font-bold text-choco-900">9344232175@ptyes</span>
+          <button onclick="copyUpiId()" class="ml-1 px-2.5 py-1 rounded-lg bg-white border border-stone-200 hover:border-brand-500 text-stone-700 hover:text-brand-600 text-[11px] font-bold shadow-sm transition-all flex items-center gap-1">
+            <i data-lucide="copy" class="w-3 h-3"></i>
+            <span id="copyUpiText">Copy</span>
+          </button>
+        </div>
+
+        <!-- 1-Click Complete Payment Button (No typing required!) -->
+        <div class="pt-2">
+          <button onclick="submitPaymentVerification()" id="submitPaymentBtn" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-black text-base shadow-xl shadow-emerald-500/30 btn-bounce flex items-center justify-center gap-2 transition-all">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+            <span>Payment Completed ✅</span>
+          </button>
+          <span class="text-[11px] text-stone-400 block mt-1.5 font-medium">Tap above after completing payment to notify kitchen</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- PAGE 5: ORDER CONFIRMATION & LIVE STATUS TRACKER -->
+  <!-- ======================================================== -->
+  <div id="confirmationModal" class="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 p-0 sm:p-4">
+    <div id="confirmationModalCard" class="bg-white w-full max-w-lg rounded-t-3xl sm:rounded-3xl max-h-[92vh] overflow-y-auto transform translate-y-full sm:translate-y-8 transition-transform duration-300 shadow-2xl flex flex-col">
+      
+      <!-- Confirmation Header -->
+      <div class="p-6 text-center bg-gradient-to-b from-pink-100/90 via-cream-50 to-white rounded-t-3xl relative overflow-hidden">
+        <button onclick="closeConfirmationModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/10 hover:bg-black/20 text-stone-700 flex items-center justify-center transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+
+        <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center text-3xl shadow-lg shadow-emerald-500/20 mb-3 pulse-soft">
+          ❤️
+        </div>
+
+        <h3 class="text-2xl font-black text-choco-900 font-heading">Thank You for Your Order! ❤️</h3>
+        <p class="text-xs sm:text-sm text-stone-600 font-medium mt-1">
+          Your delicious ice cream is being prepared. Please wait!
+        </p>
+
+        <!-- Order ID Pill -->
+        <div class="inline-flex items-center gap-2 mt-3 px-3.5 py-1.5 rounded-full bg-white border border-pink-200 shadow-sm text-xs font-bold">
+          <span class="text-brand-600">Order ID:</span>
+          <span id="confirmOrderId" class="font-extrabold text-choco-900 font-mono">#HC-0000</span>
+          <span class="text-stone-300">|</span>
+          <span class="text-emerald-600 font-extrabold">Paid &amp; Verified ✅</span>
+        </div>
+      </div>
+
+      <!-- Live Order Status Tracker (Interactive 4-Step Process) -->
+      <div class="p-5 sm:p-6 space-y-6 flex-1 overflow-y-auto">
+        
+        <!-- Live Status Card -->
+        <div class="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-black uppercase tracking-wider text-choco-900 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+              <span>Live Kitchen Tracker</span>
+            </span>
+            <span id="liveStatusBadge" class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-extrabold uppercase">Confirmed</span>
+          </div>
+
+          <!-- Step Indicators -->
+          <div class="grid grid-cols-4 gap-2 text-center text-[10px] font-bold">
+            
+            <!-- Step 1: Placed -->
+            <div id="step-1" class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-1 shadow-sm">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </div>
+              <span class="text-emerald-700 font-extrabold">Placed</span>
+            </div>
+
+            <!-- Step 2: Confirmed -->
+            <div id="step-2" class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-1 shadow-sm">
+                <i data-lucide="thumbs-up" class="w-4 h-4"></i>
+              </div>
+              <span class="text-emerald-700 font-extrabold">Confirmed</span>
+            </div>
+
+            <!-- Step 3: Preparing -->
+            <div id="step-3" class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-amber-400 text-amber-950 flex items-center justify-center mb-1 shadow-sm pulse-soft">
+                <span class="text-sm">🍦</span>
+              </div>
+              <span class="text-amber-800 font-extrabold">Preparing</span>
+            </div>
+
+            <!-- Step 4: Ready -->
+            <div id="step-4" class="flex flex-col items-center">
+              <div class="w-8 h-8 rounded-full bg-stone-200 text-stone-400 flex items-center justify-center mb-1 shadow-sm">
+                <i data-lucide="bell" class="w-4 h-4"></i>
+              </div>
+              <span class="text-stone-400 font-semibold">Ready</span>
+            </div>
+
+          </div>
+
+          <!-- Progress bar -->
+          <div class="w-full h-1.5 bg-stone-200 rounded-full mt-3 overflow-hidden">
+            <div id="progressBarFill" class="h-full bg-gradient-to-r from-emerald-500 via-amber-400 to-brand-500 transition-all duration-500" style="width: 50%;"></div>
+          </div>
+
+          <div class="text-center mt-3 text-xs text-stone-500">
+            <span>Estimated Serving Time:</span>
+            <strong class="text-choco-900" id="estimatedPrepTime">4-6 mins</strong>
+          </div>
+        </div>
+
+        <!-- Ordered Items Summary -->
+        <div class="space-y-2">
+          <div class="text-xs font-black uppercase tracking-wider text-choco-900">Ordered Cones &amp; Treats</div>
+          <div id="confirmItemsList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Payment Verification Status -->
+        <div class="p-3 rounded-2xl bg-pink-50 border border-pink-100 flex items-center justify-between text-xs">
+          <div>
+            <div class="font-bold text-choco-900">Payment Status</div>
+            <div id="confirmPaymentRefText" class="text-[11px] text-stone-500 font-mono">Ref: --</div>
+          </div>
+          <span id="confirmPaymentStatusBadge" class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold">Verified</span>
+        </div>
+
+        <!-- Total Paid -->
+        <div class="flex items-center justify-between p-3 rounded-2xl bg-choco-900 text-white">
+          <span class="text-xs font-bold text-pink-200">Total Paid (Google Pay / UPI)</span>
+          <span id="confirmTotalPaid" class="text-xl font-black text-amber-300">₹0</span>
+        </div>
+
+        <!-- Prominent WhatsApp Sent Notice / Direct Chat -->
+        <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-2">
+          <div class="flex items-center justify-center gap-1.5 text-xs font-black text-emerald-800">
+            <span class="text-base">📲</span>
+            <span>Order Sent to Owner WhatsApp: 9344232175</span>
+          </div>
+          <p class="text-[11px] text-emerald-700 font-medium">Your paid order and payment details have been generated for HAPPY CONES.</p>
+          <a id="directWhatsAppLink" href="#" target="_blank" class="w-full py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md flex items-center justify-center gap-1.5 transition-all">
+            <span>💬 Send Again via WhatsApp (9344232175)</span>
+          </a>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-2 pt-1">
+          <button onclick="window.print()" class="py-3 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors">
+            <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+            <span>Print Receipt</span>
+          </button>
+
+          <button onclick="orderMoreIceCream()" class="flex-1 py-3 px-4 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold shadow-md shadow-brand-500/25 flex items-center justify-center gap-1 transition-colors">
+            <span>Order More 🍦</span>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SHOP ORIGINAL QR POPUP MODAL -->
+  <div id="shopQrModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 p-4">
+    <div class="bg-white rounded-3xl p-6 max-w-xs w-full text-center shadow-2xl space-y-3">
+      <div class="flex items-center justify-between pb-2 border-b border-stone-100">
+        <h4 class="text-xs font-black text-choco-900 font-heading">Shop Official Paytm QR</h4>
+        <button onclick="toggleShopQrModal()" class="w-7 h-7 rounded-full bg-stone-100 flex items-center justify-center text-stone-500 hover:text-stone-800">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <img src="/api/payment-qr" alt="Shop Paytm QR" class="w-full h-auto rounded-2xl shadow-sm border border-stone-200">
+      <p class="text-[10px] text-stone-500 font-medium">Payee: Prasanna G (9344232175@ptyes)</p>
+      <button onclick="toggleShopQrModal()" class="w-full py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold rounded-xl transition-colors">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION POPUP -->
+  <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 transform -translate-y-12 opacity-0 pointer-events-none transition-all duration-300 bg-choco-900 text-white px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2 text-xs font-bold border border-choco-700">
+    <span id="toastIcon">🍦</span>
+    <span id="toastMessage">Added to cart!</span>
+  </div>
+
+  <!-- Core App Logic -->
+  <script src="/js/app.js"></script>
+</body>
+</html>
+
