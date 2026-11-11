@@ -104,57 +104,6 @@
   <!-- ======================================================== -->
   <main class="max-w-6xl mx-auto px-4 py-4 md:py-6">
 
-    <!-- HERO WELCOME BANNER (PAGE 1) -->
-    <section class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-pink-500 via-rose-500 to-amber-500 text-white shadow-xl shadow-pink-500/15 mb-6 md:mb-8 p-6 md:p-10">
-      <!-- Decorative background blur circles -->
-      <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-yellow-300/30 rounded-full blur-2xl pointer-events-none"></div>
-      <div class="absolute -left-10 -top-10 w-60 h-60 bg-pink-300/30 rounded-full blur-2xl pointer-events-none"></div>
-      
-      <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-        <div class="md:col-span-8 space-y-3">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold uppercase tracking-wider text-white border border-white/20">
-            <span>✨ Pure Artisanal Ice Creams</span>
-            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-            <span>QR Ordering</span>
-          </div>
-
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-black font-heading tracking-tight leading-tight">
-            Welcome to Our <br class="hidden sm:inline">Ice Cream Paradise! 🍦
-          </h1>
-
-          <p class="text-pink-100 text-sm sm:text-base font-medium max-w-xl">
-            Choose Your Favourite Ice Cream &amp; Enjoy Every Bite! Handcrafted with rich dairy cream, Belgian chocolates, and fresh farm fruits.
-          </p>
-
-          <!-- Direct Order Notice -->
-          <div class="flex flex-wrap items-center gap-3 pt-2 text-xs font-bold text-white/95">
-            <div class="flex items-center gap-1.5 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-xl border border-white/10">
-              <i data-lucide="qr-code" class="w-4 h-4 text-amber-300"></i>
-              <span>Scanned from Shop QR</span>
-            </div>
-            <div class="flex items-center gap-1.5 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-xl border border-white/10">
-              <i data-lucide="zap" class="w-4 h-4 text-emerald-300"></i>
-              <span>Instant Kitchen Order</span>
-            </div>
-            <div class="flex items-center gap-1.5 bg-black/20 backdrop-blur-sm px-3 py-1.5 rounded-xl border border-white/10">
-              <i data-lucide="credit-card" class="w-4 h-4 text-sky-300"></i>
-              <span>Google Pay / UPI</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hero visual illustration -->
-        <div class="md:col-span-4 flex justify-center relative">
-          <div class="w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 relative animate-float">
-            <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=400&q=80" alt="Delicious Sundae" class="w-full h-full object-cover rounded-3xl shadow-2xl border-4 border-white/40 ring-4 ring-pink-300/30">
-            <div class="absolute -bottom-3 -right-3 bg-white text-choco-900 font-extrabold text-xs px-3 py-1.5 rounded-2xl shadow-lg border border-pink-100 flex items-center gap-1">
-              <span>⭐ 4.9 Rating</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- SEARCH & CATEGORY FILTER TABS -->
     <div class="sticky top-16 z-20 py-2 bg-icecream-pattern/95 backdrop-blur-md space-y-3 mb-6">
       
@@ -732,7 +681,7 @@
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
       </div>
-      <img src="/api/payment-qr" alt="Shop Paytm QR" class="w-full h-auto rounded-2xl shadow-sm border border-stone-200">
+      <img src="/api/payment-qr" onerror="this.onerror=null;this.src='/images/payment-qr-default.jpg'" alt="Shop Paytm QR" class="w-full h-auto rounded-2xl shadow-sm border border-stone-200">
       <p class="text-[10px] text-stone-500 font-medium">Payee: Prasanna G (9344232175@ptyes)</p>
       <button onclick="toggleShopQrModal()" class="w-full py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-bold rounded-xl transition-colors">
         Close

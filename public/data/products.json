@@ -1,0 +1,439 @@
+[
+  {
+    "id": "prod-cone-1",
+    "name": "Belgian Chocolate Waffle Cone",
+    "category": "Cone Ice Cream",
+    "price": 70,
+    "description": "Rich Belgian dark chocolate scoop nestled in a freshly baked crispy waffle cone, drizzled with warm chocolate ganache.",
+    "image": "https://images.unsplash.com/photo-1549395156-e0c1fe6fc7a5?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Bestseller",
+    "flavours": ["Belgian Dark Chocolate", "Swiss Milk Chocolate", "Choco Fudge Brownie"],
+    "sizes": [
+      { "name": "Regular (Single Scoop)", "extra": 0 },
+      { "name": "Double Scoop Deluxe", "extra": 30 },
+      { "name": "Triple Scoop Monster", "extra": 45 }
+    ],
+    "toppings": [
+      { "name": "Warm Choco Fudge", "price": 15 },
+      { "name": "Roasted Almond Flakes", "price": 10 },
+      { "name": "Rainbow Sprinkles", "price": 10 }
+    ]
+  },
+  {
+    "id": "prod-cone-2",
+    "name": "Strawberry Velvet Crunch Cone",
+    "category": "Cone Ice Cream",
+    "price": 60,
+    "description": "Creamy farm-fresh strawberry cream with crunchy white chocolate pearls in a pink waffle cone.",
+    "image": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.8,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Popular",
+    "flavours": ["Real Strawberry", "Strawberry Cheesecake", "Berry Blast"],
+    "sizes": [
+      { "name": "Regular (Single Scoop)", "extra": 0 },
+      { "name": "Double Scoop Deluxe", "extra": 25 },
+      { "name": "Waffle Bowl Supreme", "extra": 35 }
+    ],
+    "toppings": [
+      { "name": "Strawberry Compote", "price": 15 },
+      { "name": "White Choco Chips", "price": 10 },
+      { "name": "Rainbow Sprinkles", "price": 10 }
+    ]
+  },
+  {
+    "id": "prod-cone-3",
+    "name": "Butterscotch Caramel Swirl Cone",
+    "category": "Cone Ice Cream",
+    "price": 55,
+    "description": "Golden butterscotch ice cream with caramelized cashew praline and salted butter caramel swirl.",
+    "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.7,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Classic",
+    "flavours": ["Butterscotch Praline", "Salted Caramel Crunch"],
+    "sizes": [
+      { "name": "Regular (Single Scoop)", "extra": 0 },
+      { "name": "Double Scoop Deluxe", "extra": 25 }
+    ],
+    "toppings": [
+      { "name": "Caramel Drizzle", "price": 10 },
+      { "name": "Cashew Praline Crunch", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-cone-4",
+    "name": "Pistachio Royal Nut Cone",
+    "category": "Cone Ice Cream",
+    "price": 75,
+    "description": "Exquisite roasted pistachio gelato packed with saffron aroma and roasted pistachio chunks.",
+    "image": "https://images.unsplash.com/photo-1580915411954-282cb1b0d780?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Chef Special",
+    "flavours": ["Pistachio Gelato", "Pista Kesar Delight"],
+    "sizes": [
+      { "name": "Regular (Single Scoop)", "extra": 0 },
+      { "name": "Double Scoop Deluxe", "extra": 30 }
+    ],
+    "toppings": [
+      { "name": "Crushed Pistachios", "price": 15 },
+      { "name": "Honey Saffron Syrup", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-stick-1",
+    "name": "Choco-Dip Almond Bar",
+    "category": "Stick Ice Cream",
+    "price": 45,
+    "description": "Velvety vanilla ice cream bar coated with a crackling Belgian chocolate shell loaded with California almonds.",
+    "image": "https://images.unsplash.com/photo-1505394033641-40c6ad1178d7?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.8,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Top Pick",
+    "flavours": ["Vanilla Almond", "Mocha Almond", "Dark Choco Almond"],
+    "sizes": [
+      { "name": "Standard Bar (90ml)", "extra": 0 },
+      { "name": "Jumbo Crunch Bar (130ml)", "extra": 20 }
+    ],
+    "toppings": [
+      { "name": "Extra Warm Fudge Dip", "price": 15 },
+      { "name": "Crushed Hazelnut Crust", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-stick-2",
+    "name": "Alphonso Mango Real Fruit Stick",
+    "category": "Stick Ice Cream",
+    "price": 35,
+    "description": "Crafted from 100% natural Ratnagiri Alphonso mango pulp. Pure refreshing summer bliss on a wooden stick.",
+    "image": "https://images.unsplash.com/photo-1488900128323-21503983a07e?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "100% Fruit",
+    "flavours": ["Pure Alphonso Mango", "Mango Chili Zest"],
+    "sizes": [
+      { "name": "Standard Stick (85ml)", "extra": 0 },
+      { "name": "King Stick (120ml)", "extra": 15 }
+    ],
+    "toppings": [
+      { "name": "Chili Salt Sprinkle", "price": 5 },
+      { "name": "White Chocolate Dip", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-stick-3",
+    "name": "Cookies & Cream Stick Bar",
+    "category": "Stick Ice Cream",
+    "price": 40,
+    "description": "Crushed chocolate sandwich cookie chunks blended with sweet cream, encased in a white cookies & cream shell.",
+    "image": "https://images.unsplash.com/photo-1516559828984-fb3b99548b21?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.7,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Kids Favourite",
+    "flavours": ["Oreo Cookies & Cream", "Double Oreo Fudge"],
+    "sizes": [
+      { "name": "Standard Bar (90ml)", "extra": 0 }
+    ],
+    "toppings": [
+      { "name": "Crushed Oreo Crumbs", "price": 10 }
+    ]
+  },
+  {
+    "id": "prod-cup-1",
+    "name": "Double Chocolate Fudge Cup",
+    "category": "Cup Ice Cream",
+    "price": 50,
+    "description": "Deep dark cocoa ice cream layered with gooey fudge brownie chunks in a neat paper cup with spoon.",
+    "image": "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Choco Lovers",
+    "flavours": ["Dark Cocoa Fudge", "Milk Choco Brownie"],
+    "sizes": [
+      { "name": "Single Cup (100ml)", "extra": 0 },
+      { "name": "Double Cup (180ml)", "extra": 25 },
+      { "name": "Mega Cup (250ml)", "extra": 40 }
+    ],
+    "toppings": [
+      { "name": "Hot Fudge Sauce", "price": 15 },
+      { "name": "Choco Chips", "price": 10 },
+      { "name": "Brownie Crumbs", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-cup-2",
+    "name": "Madagascar Vanilla Bean Cup",
+    "category": "Cup Ice Cream",
+    "price": 40,
+    "description": "Authentic vanilla bean pods infused in rich cream, studded with natural black vanilla specks.",
+    "image": "https://images.unsplash.com/photo-1570197571499-166b36435e9f?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.6,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Pure Classic",
+    "flavours": ["Madagascar Vanilla Bean", "French Vanilla"],
+    "sizes": [
+      { "name": "Single Cup (100ml)", "extra": 0 },
+      { "name": "Double Cup (180ml)", "extra": 20 }
+    ],
+    "toppings": [
+      { "name": "Caramel Syrup", "price": 10 },
+      { "name": "Honey Almonds", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-cup-3",
+    "name": "Tender Coconut Natural Cup",
+    "category": "Cup Ice Cream",
+    "price": 55,
+    "description": "Real tender coconut malai chunks folded into silky cream with zero artificial flavouring.",
+    "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Natural",
+    "flavours": ["Tender Coconut (Elaneer)", "Coconut Cashew Crunch"],
+    "sizes": [
+      { "name": "Single Cup (100ml)", "extra": 0 },
+      { "name": "Double Cup (180ml)", "extra": 25 }
+    ],
+    "toppings": [
+      { "name": "Tender Coconut Shavings", "price": 10 }
+    ]
+  },
+  {
+    "id": "prod-kulfi-1",
+    "name": "Traditional Malai Kulfi",
+    "category": "Kulfi Ice Cream",
+    "price": 35,
+    "description": "Slow-simmered rabri milk kulfi infused with green cardamom and crunchy pistachios on a traditional wooden stick.",
+    "image": "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Desi Classic",
+    "flavours": ["Classic Malai Rabri", "Pista Malai"],
+    "sizes": [
+      { "name": "Traditional Stick (70ml)", "extra": 0 },
+      { "name": "Double Stick (120ml)", "extra": 20 }
+    ],
+    "toppings": [
+      { "name": "Rose Falooda Syrup", "price": 10 },
+      { "name": "Crushed Pista Badam", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-kulfi-2",
+    "name": "Royal Kesar Pista Kulfi",
+    "category": "Kulfi Ice Cream",
+    "price": 45,
+    "description": "Kashmiri saffron threads steeped in rich thickened milk, garnished generously with slivered pistachios and almonds.",
+    "image": "https://images.unsplash.com/photo-1627834377411-8da5f4f09de8?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.8,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Royal Saffron",
+    "flavours": ["Kesar Pista Royal", "Shahi Badam Kulfi"],
+    "sizes": [
+      { "name": "Traditional Stick (70ml)", "extra": 0 },
+      { "name": "King Stick (120ml)", "extra": 20 }
+    ],
+    "toppings": [
+      { "name": "Silver Vark & Rose Petals", "price": 15 },
+      { "name": "Saffron Glaze", "price": 10 }
+    ]
+  },
+  {
+    "id": "prod-kulfi-3",
+    "name": "Matka Pot Kulfi",
+    "category": "Kulfi Ice Cream",
+    "price": 60,
+    "description": "Served in an authentic earthen clay pot (matka) keeping the dense aromatic kulfi ice-cold and earthy.",
+    "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80",
+    "rating": 5.0,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Signature",
+    "flavours": ["Matka Special Rabri", "Matka Kesar Pista"],
+    "sizes": [
+      { "name": "Clay Pot (120ml)", "extra": 0 },
+      { "name": "Grand Clay Pot (200ml)", "extra": 30 }
+    ],
+    "toppings": [
+      { "name": "Cardamom Pistachio Dust", "price": 10 }
+    ]
+  },
+  {
+    "id": "prod-choco-1",
+    "name": "Death by Chocolate Deluxe",
+    "category": "Chocolate Ice Cream",
+    "price": 95,
+    "description": "Triple dark chocolate ice cream loaded with warm fudge cake cubes, hot molten ganache, and dark chocolate flakes.",
+    "image": "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?auto=format&fit=crop&w=600&q=80",
+    "rating": 5.0,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Best Indulgence",
+    "flavours": ["70% Belgian Dark Cocoa", "Chocolate Overload"],
+    "sizes": [
+      { "name": "Regular Glass Bowl", "extra": 0 },
+      { "name": "Monster Chocolate Bowl", "extra": 40 }
+    ],
+    "toppings": [
+      { "name": "Hot Chocolate Ganache", "price": 15 },
+      { "name": "Brownie Crust", "price": 15 },
+      { "name": "Dark Choco Chips", "price": 10 }
+    ]
+  },
+  {
+    "id": "prod-choco-2",
+    "name": "Nutella Hazelnut Craze",
+    "category": "Chocolate Ice Cream",
+    "price": 99,
+    "description": "Creamy Italian hazelnut ice cream swirled with authentic gooey Nutella and roasted hazelnut brittle.",
+    "image": "https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Nutella Love",
+    "flavours": ["Nutella Cream", "Hazelnut Praline"],
+    "sizes": [
+      { "name": "Single Serving", "extra": 0 },
+      { "name": "Jumbo Serving", "extra": 35 }
+    ],
+    "toppings": [
+      { "name": "Warm Nutella Drizzle", "price": 15 },
+      { "name": "Roasted Hazelnuts", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-sundae-1",
+    "name": "Hot Chocolate Fudge Sundae",
+    "category": "Sundae Ice Cream",
+    "price": 110,
+    "description": "Two scoops of fresh vanilla bean ice cream drowned in boiling hot chocolate fudge, topped with roasted cashews and cherry.",
+    "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Legendary",
+    "flavours": ["Vanilla & Fudge", "Chocolate & Fudge"],
+    "sizes": [
+      { "name": "Classic Sundae (2 Scoops)", "extra": 0 },
+      { "name": "Giant Sundae (3 Scoops)", "extra": 35 }
+    ],
+    "toppings": [
+      { "name": "Extra Hot Fudge (Shot)", "price": 15 },
+      { "name": "Roasted Salted Cashews", "price": 15 },
+      { "name": "Whipped Cream Mountain", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-sundae-2",
+    "name": "Classic Banana Split Sundae",
+    "category": "Sundae Ice Cream",
+    "price": 120,
+    "description": "Fresh ripe banana sliced lengthwise with trio scoops of strawberry, vanilla, and chocolate, topped with syrups, nuts, and cherries.",
+    "image": "https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.8,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Retro Classic",
+    "flavours": ["Trio (Strawberry, Vanilla, Choco)", "Custom Trio"],
+    "sizes": [
+      { "name": "Standard Split Boat", "extra": 0 }
+    ],
+    "toppings": [
+      { "name": "Rainbow Sprinkles", "price": 10 },
+      { "name": "Maraschino Cherries", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-family-1",
+    "name": "Belgian Dark Chocolate Tub (500ml)",
+    "category": "Family Pack Ice Cream",
+    "price": 140,
+    "description": "Party tub of deep, velvety dark Belgian cocoa ice cream. Delicious and budget-friendly for the family.",
+    "image": "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Party Tub",
+    "flavours": ["Belgian Dark Cocoa", "Chocolate Truffle"],
+    "sizes": [
+      { "name": "500ml Party Tub", "extra": 0 }
+    ],
+    "toppings": [
+      { "name": "Waffle Cones (Pack of 3)", "price": 20 }
+    ]
+  },
+  {
+    "id": "prod-family-2",
+    "name": "Creamy Alphonso Mango Tub (500ml)",
+    "category": "Family Pack Ice Cream",
+    "price": 130,
+    "description": "Tropical paradise party tub! Authentic Ratnagiri Alphonso mango pulp churned with farm milk.",
+    "image": "https://images.unsplash.com/photo-1488900128323-21503983a07e?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.8,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Summer Special",
+    "flavours": ["Alphonso Mango", "Mango & Vanilla Swirl"],
+    "sizes": [
+      { "name": "500ml Party Tub", "extra": 0 }
+    ],
+    "toppings": [
+      { "name": "Waffle Cones (Pack of 3)", "price": 20 }
+    ]
+  },
+  {
+    "id": "prod-special-1",
+    "name": "Sizzling Brownie with Ice Cream",
+    "category": "Special Ice Cream",
+    "price": 135,
+    "description": "Hot sizzling plate with fudgy walnut brownie, topped with chilled vanilla bean ice cream and hot chocolate sauce.",
+    "image": "https://images.unsplash.com/photo-1549395156-e0c1fe6fc7a5?auto=format&fit=crop&w=600&q=80",
+    "rating": 5.0,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Live Sizzler",
+    "flavours": ["Vanilla Bean Scoop", "Belgian Dark Choco Scoop", "Butterscotch Scoop"],
+    "sizes": [
+      { "name": "Standard Sizzler", "extra": 0 }
+    ],
+    "toppings": [
+      { "name": "Extra Hot Chocolate Sizzle Shot", "price": 15 }
+    ]
+  },
+  {
+    "id": "prod-special-2",
+    "name": "Bubble Waffle Monster Sundae",
+    "category": "Special Ice Cream",
+    "price": 140,
+    "description": "Warm fluffy bubble waffle wrapped around 2 scoops of ice cream, loaded with chocolate sticks and syrup.",
+    "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80",
+    "rating": 4.9,
+    "isVeg": true,
+    "inStock": true,
+    "badge": "Viral Hit",
+    "flavours": ["Strawberry & Vanilla", "Choco & Salted Caramel"],
+    "sizes": [
+      { "name": "Monster Waffle Cone", "extra": 0 }
+    ],
+    "toppings": [
+      { "name": "Marshmallows & Pocky", "price": 15 },
+      { "name": "Nutella Spread", "price": 15 }
+    ]
+  }
+]

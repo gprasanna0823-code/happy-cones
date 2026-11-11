@@ -273,7 +273,7 @@
 
           <!-- Active QR Preview -->
           <div class="p-3 bg-pink-50/60 rounded-2xl border-2 border-dashed border-pink-200 inline-block max-w-xs mx-auto">
-            <img id="adminCurrentQrImg" src="/api/payment-qr" alt="Current Payment QR" class="w-64 h-auto rounded-xl shadow-md object-contain mx-auto">
+            <img id="adminCurrentQrImg" src="/api/payment-qr" onerror="this.onerror=null;this.src='/images/payment-qr-default.jpg'" alt="Current Payment QR" class="w-64 h-auto rounded-xl shadow-md object-contain mx-auto">
           </div>
 
           <!-- Upload New Genuine QR Code -->

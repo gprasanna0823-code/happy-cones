@@ -5,9 +5,11 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { getDeployStore, getStore } from '@netlify/blobs';
 import qrGenerator from '../../public/js/qr-generator.js';
+import { SEED_PRODUCTS, SEED_SETTINGS, SEED_PAYMENT_QR_BASE64 } from './seed-data.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,9 +34,16 @@ function readBundledData(filename, asText = false) {
     path.resolve(process.cwd(), 'data', filename),
     path.resolve(__dirname, '..', '..', 'data', filename)
   ];
+  if (process.env.LAMBDA_TASK_ROOT) {
+    candidates.push(path.resolve(process.env.LAMBDA_TASK_ROOT, 'data', filename));
+  }
   for (const filePath of candidates) {
-    if (fs.existsSync(filePath)) {
-      return asText ? fs.readFileSync(filePath, 'utf8') : fs.readFileSync(filePath);
+    try {
+      if (fs.existsSync(filePath)) {
+        return asText ? fs.readFileSync(filePath, 'utf8') : fs.readFileSync(filePath);
+      }
+    } catch {
+      // Try next candidate
     }
   }
   return null;
@@ -43,21 +52,25 @@ function readBundledData(filename, asText = false) {
 function getSeedProducts() {
   try {
     const raw = readBundledData('products.json', true);
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
   } catch (err) {
     console.error('Failed to read bundled products.json:', err);
   }
-  return [];
+  return SEED_PRODUCTS.map((p) => ({ ...p }));
 }
 
 function getSeedSettings() {
+  const base = { ...DEFAULT_SETTINGS, ...SEED_SETTINGS };
   try {
     const raw = readBundledData('settings.json', true);
-    if (raw) return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+    if (raw) return { ...base, ...JSON.parse(raw) };
   } catch (err) {
     console.error('Failed to read bundled settings.json:', err);
   }
-  return { ...DEFAULT_SETTINGS };
+  return base;
 }
 
 function getDataStore(context, customStoreFactory) {
@@ -103,11 +116,18 @@ async function loadSettings(store) {
 
 async function loadProducts(store) {
   const stored = await store.get('products', { type: 'json' });
-  if (Array.isArray(stored)) {
+  if (Array.isArray(stored) && stored.length > 0) {
     return stored;
+  }
+  if (Array.isArray(stored) && stored.length === 0) {
+    const seededFlag = await store.get('products-seeded');
+    if (seededFlag === 'v2') {
+      return stored;
+    }
   }
   const seed = getSeedProducts();
   await store.setJSON('products', seed);
+  await store.set('products-seeded', 'v2');
   return seed;
 }
 
@@ -182,7 +202,11 @@ export async function handleApiRequest(req, context = {}, options = {}) {
     if ((pathname === '/api/shop-qr.png' || pathname === '/api/shop-qr') && method === 'GET') {
       const customUrl = urlObj.searchParams.get('url');
       const targetUrl = (customUrl && /^https?:\/\//i.test(customUrl)) ? customUrl : origin;
-      const pngBuffer = qrGenerator.generateQRCodePNGBuffer(targetUrl, { size: 420, border: 4 });
+      const pngBuffer = qrGenerator.generateQRCodePNGBuffer(targetUrl, {
+        size: 420,
+        border: 4,
+        deflateSync: zlib.deflateSync
+      });
       return new Response(new Uint8Array(pngBuffer), {
         status: 200,
         headers: {
@@ -219,7 +243,8 @@ export async function handleApiRequest(req, context = {}, options = {}) {
           }
         });
       }
-      const fallbackImg = readBundledData('payment-qr.jpg', false);
+      const fallbackImg = readBundledData('payment-qr.jpg', false)
+        || (SEED_PAYMENT_QR_BASE64 ? Buffer.from(SEED_PAYMENT_QR_BASE64, 'base64') : null);
       if (fallbackImg) {
         return new Response(new Uint8Array(fallbackImg), {
           status: 200,
@@ -323,6 +348,7 @@ export async function handleApiRequest(req, context = {}, options = {}) {
         return jsonResponse({ success: false, message: 'Product not found' }, 404);
       }
       await store.setJSON('products', next);
+      await store.set('products-seeded', 'v2');
       return jsonResponse({ success: true, message: 'Product deleted' });
     }
 

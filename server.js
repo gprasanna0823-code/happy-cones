@@ -8,6 +8,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const zlib = require('zlib');
 const qrGenerator = require('./public/js/qr-generator');
 
 const PORT = process.env.PORT || 3000;
@@ -183,7 +184,11 @@ const server = http.createServer(async (req, res) => {
     const targetUrl = (queryParams.url && /^https?:\/\//i.test(queryParams.url))
       ? queryParams.url
       : `http://${localIP}:${PORT}`;
-    const pngBuffer = qrGenerator.generateQRCodePNGBuffer(targetUrl, { size: 420, border: 4 });
+    const pngBuffer = qrGenerator.generateQRCodePNGBuffer(targetUrl, {
+      size: 420,
+      border: 4,
+      deflateSync: zlib.deflateSync
+    });
     res.writeHead(200, {
       'Content-Type': 'image/png',
       'Cache-Control': 'no-cache',

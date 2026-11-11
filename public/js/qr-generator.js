@@ -685,13 +685,39 @@
       '</svg>';
   };
 
+  function deflateStoredZlib(raw) {
+    var chunkMax = 65535;
+    var numChunks = Math.max(1, Math.ceil(raw.length / chunkMax));
+    var out = Buffer.alloc(2 + raw.length + numChunks * 5 + 4);
+    var pos = 0;
+    out[pos++] = 0x78; // CMF: deflate, 32K window
+    out[pos++] = 0x01; // FLG: no dict, FCHECK valid mod 31
+    var offset = 0;
+    for (var idx = 0; idx < numChunks; idx++) {
+      var len = Math.min(chunkMax, raw.length - offset);
+      out[pos++] = (idx === numChunks - 1) ? 1 : 0; // BFINAL + BTYPE=00
+      out.writeUInt16LE(len, pos); pos += 2;
+      out.writeUInt16LE(65535 ^ len, pos); pos += 2;
+      if (len > 0) {
+        raw.copy(out, pos, offset, offset + len);
+        pos += len;
+      }
+      offset += len;
+    }
+    var s1 = 1;
+    var s2 = 0;
+    for (var i = 0; i < raw.length; i++) {
+      s1 = (s1 + raw[i]) % 65521;
+      s2 = (s2 + s1) % 65521;
+    }
+    out.writeUInt32BE(((s2 << 16) | s1) >>> 0, pos);
+    return out;
+  }
+
   // Pure-Node crisp PNG generator (zero external dependencies)
   function generateQRCodePNGBuffer(text, options) {
-    if (typeof require === 'undefined') {
-      throw new Error('generateQRCodePNGBuffer requires Node.js environment');
-    }
-    var zlib = require('zlib');
     options = options || {};
+    var deflateFn = (typeof options.deflateSync === 'function') ? options.deflateSync : deflateStoredZlib;
     var size = options.size || 420;
     var border = (typeof options.border === 'number') ? options.border : 4;
     var qr = createQRMatrix(text, options);
@@ -759,7 +785,7 @@
     ihdr[11] = 0;
     ihdr[12] = 0;
 
-    var compressed = zlib.deflateSync(raw);
+    var compressed = deflateFn(raw);
     return Buffer.concat([
       signature,
       makeChunk('IHDR', ihdr),

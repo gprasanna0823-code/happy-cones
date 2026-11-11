@@ -94,16 +94,30 @@ async function loadShopSettings() {
   }
 }
 
-// Load Products from API
+// Load Products from API (with static catalog fallback if API is unavailable)
 async function loadProducts() {
   try {
     const res = await fetch('/api/products');
-    if (res.ok) {
+    const contentType = res.headers.get('content-type') || '';
+    if (res.ok && contentType.includes('application/json')) {
       const data = await res.json();
-      state.products = data.products || [];
+      if (Array.isArray(data.products) && data.products.length > 0) {
+        state.products = data.products;
+        return;
+      }
     }
   } catch (err) {
-    console.error('Error loading products', err);
+    console.warn('API products fetch failed, falling back to static catalog', err);
+  }
+
+  try {
+    const fallbackRes = await fetch('/data/products.json');
+    if (fallbackRes.ok) {
+      const fallbackData = await fallbackRes.json();
+      state.products = Array.isArray(fallbackData) ? fallbackData : (fallbackData.products || []);
+    }
+  } catch (err) {
+    console.error('Error loading products catalog', err);
   }
 }
 
